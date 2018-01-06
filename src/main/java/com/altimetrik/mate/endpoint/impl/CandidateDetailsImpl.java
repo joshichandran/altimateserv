@@ -5,13 +5,17 @@ import java.util.List;
 
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import com.altimetrik.mate.endpoint.CandidateDetails;
 import com.altimetrik.mate.model.Candidate;
 import com.altimetrik.mate.model.Experience;
 import com.altimetrik.mate.model.Link;
+import com.altimetrik.mate.model.ScheduleDetail;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Component
 @Scope("request")
 public class CandidateDetailsImpl implements CandidateDetails {
+	
 
 	public static final String ALTI_API_PREFIX = "/v1/manage/candidate/get?id=";
 
@@ -106,11 +111,14 @@ public class CandidateDetailsImpl implements CandidateDetails {
 
 	@Override
 	public Response getAll() throws JsonProcessingException {
+		//sendCabRequestMail(null);
 		List<Candidate> getAllCandidate = new ArrayList<>();
 		for (Candidate candidate : listCandidate) {
 			getAllCandidate.add(candidate);
 		}
 		return Response.ok(getAllCandidate).build();
 	}
+	
+	
 
 }
